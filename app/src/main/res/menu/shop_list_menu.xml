@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activity.shop.ShopListActivity">
+    <item
+        android:icon="@drawable/pr_menu"
+        android:title="Menu"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/shop_list_add_menu"
+                android:icon="@drawable/pr_add"
+                android:title="Aggiungi punto vendita" />
+            <item
+                android:id="@+id/shop_list_exit_menu"
+                android:icon="@drawable/pr_exit"
+                android:title="Chiudi" />
+        </menu>
+    </item>
+</menu>

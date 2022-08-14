@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/layout/activity_product_add.xml" value="0.17552083333333332" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/layout/activity_ril_prezzo_lettura_bar_code_temp.xml" value="0.1" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/layout/calendar_layout.xml" value="0.17552083333333332" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/layout/flash_reading_layout.xml" value="0.3333333333333333" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/layout/main_activity_layout.xml" value="0.14130434782608695" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/layout/product_add_layout.xml" value="0.17552083333333332" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/layout/product_edit_layout.xml" value="0.17552083333333332" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/layout/product_list_item_layout.xml" value="0.17552083333333332" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/layout/product_list_layout.xml" value="0.1" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/layout/reading_layout.xml" value="0.17552083333333332" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/layout/reading_list_item_layout.xml" value="0.4466666666666667" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/layout/reading_list_layout.xml" value="0.17552083333333332" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/layout/result_viewer_layout.xml" value="0.1" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/layout/result_viewer_page_number_spinner_layout.xml" value="0.1" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/layout/result_viewer_page_size_spinner_layout.xml" value="0.17552083333333332" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/layout/ril_prezzo_calendario_layout.xml" value="0.17481884057971014" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/layout/shop_add_layout.xml" value="0.1" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/layout/shop_edit_layout.xml" value="0.17552083333333332" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/layout/shop_list_activity_layout.xml" value="0.1" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/layout/shop_list_item_layout.xml" value="0.17447916666666666" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/layout/shop_list_layout.xml" value="0.12454710144927536" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/layout/statistics_item_layout.xml" value="0.14285714285714285" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/layout/statistics_layout.xml" value="0.16666666666666666" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/layout/statistics_shop_list_spinner_layout.xml" value="0.1" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/menu/main_menu.xml" value="0.1" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/menu/product_list_menu.xml" value="0.17552083333333332" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/menu/shop_list_menu.xml" value="0.17552083333333332" />
+        <entry key="..\:/projects/etc/pricereading/app/src/main/res/menu/statistics_menu.xml" value="0.17552083333333332" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">Price Reading</string>
+
+    <string name="pr_shop_hint_name">PUNTO VENDITA. ES.: CARREFOUR</string>
+    <string name="pr_shop_hint_address">INDIRIZZO. ES.: VIA VINCENZO CALVANESE, 33</string>
+    <string name="pr_shop_hint_location">CITTA\'. ES.: AFRAGOLA</string>
+    <string name="pr_shop_hint_postal_code">CAP. ES.: 80021</string>
+    <string name="pr_shop_hint_distribution">SIGLA. ES.: CARREFOUR</string>
+
+    <string name="pr_shop_empty_name">NOME N/D</string>
+    <string name="pr_shop_empty_address">INDIRIZZO N/D</string>
+    <string name="pr_shop_empty_location">CITTA\' N/D</string>
+    <string name="pr_shop_empty_postal_code">CAP N/D</string>
+    <string name="pr_shop_empty_distribution">SIGLA N/D</string>
+
+    <string name="pr_product_hint_name">PRODOTTO. ES.: FIORDACQUA</string>
+    <string name="pr_product_hint_barcode">BARCODE. ES.: 8006789010157</string>
+
+    <string name="pr_product_empty_name">NOME N/D</string>
+    <string name="pr_product_empty_barcode">BARCODE N/D</string>
+
+    <string name="pr_price_hint">0.00</string>
+    <string name="pr_promo_hint">0.00</string>
+
+    <string name="pr_date_hint">GG/MM/AAAA</string>
+
+    <string name="pr_statistics_price_last_empty">Prezzo più recente N/D</string>
+    <string name="pr_statistics_promo_last_empty">Promo più recente N/D</string>
+    <string name="pr_statistics_price_mean_empty">Prezzo medio N/D</string>
+    <string name="pr_statistics_promo_mean_empty">Promo media N/D</string>
+    <string name="pr_statistics_price_min_empty">Prezzo minimo N/D</string>
+    <string name="pr_statistics_promo_min_empty">Promo minima N/D</string>
+    <string name="pr_statistics_price_max_empty">Prezzo massimo N/D</string>
+    <string name="pr_statistics_promo_max_empty">Promo massima N/D</string>
+    <string name="pr_statistics_show_switch_on">Mostra statistiche generali</string>
+    <string name="pr_statistics_show_switch_off">Nascondi statistiche generali</string>
+
+    <plurals name="pr_statistics_shop_count">
+        <item quantity="zero">Nessun punto vendita</item>
+        <item quantity="one">1 punto vendita</item>
+        <item quantity="other">%s punti vendita</item>
+    </plurals>
+
+    <string name="pr_statistics_product_price_last">Prezzo last: %s€ il %s presso %s</string>
+    <string name="pr_statistics_product_promo_last">Promo last: %s€ il %s presso %s</string>
+    <string name="pr_statistics_product_price_mean">Prezzo medio: %s€</string>
+    <string name="pr_statistics_product_promo_mean">Promo media: %s€</string>
+    <string name="pr_statistics_product_price_min">Prezzo min: %s€ il %s presso %s</string>
+    <string name="pr_statistics_product_promo_min">Promo min: %s€ il %s presso %s</string>
+    <string name="pr_statistics_product_price_max">Prezzo max: %s€ il %s presso %s</string>
+    <string name="pr_statistics_product_promo_max">Promo max: %s€ il %s presso %s</string>
+
+    <string name="pr_statistics_shop_price_last">Prezzo last: %s€ - %s</string>
+    <string name="pr_statistics_shop_promo_last">Promo last: %s€ - %s</string>
+    <string name="pr_statistics_shop_price_mean">Prezzo medio: %s€</string>
+    <string name="pr_statistics_shop_promo_mean">Promo media: %s€</string>
+    <string name="pr_statistics_shop_price_min">Prezzo min: %s€ - %s</string>
+    <string name="pr_statistics_shop_promo_min">Promo min: %s€ - %s</string>
+    <string name="pr_statistics_shop_price_max">Prezzo max: %s€ - %s</string>
+    <string name="pr_statistics_shop_promo_max">Promo max: %s€ - %s</string>
+
+    <string name="pr_price">%s€</string>
+
+</resources>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.ds.app.pricereading">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.PriceReading"
+        tools:targetApi="31">
+        <activity
+            android:name=".activity.ReadingListActivity"
+            android:exported="false"
+            android:label="Elenco rilevazioni"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.StatisticsActivity"
+            android:exported="false"
+            android:label="Statistiche"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CalendarActivity"
+            android:exported="false"
+            android:label="Seleziona data"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FlashReadingActivity"
+            android:exported="false"
+            android:label="Lettura prezzo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.product.ProductEditActivity"
+            android:exported="false"
+            android:label="Modifica prodotto"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BarcodeReaderActivity"
+            android:exported="false"
+            android:label="Lettura barcode"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.product.ProductAddActivity"
+            android:exported="false"
+            android:label="Aggiungi prodotto"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.product.ProductListActivity"
+            android:exported="false"
+            android:label="Elenco prodotti"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.shop.ShopEditActivity"
+            android:exported="false"
+            android:label="Modifica punto vendita"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.shop.ShopAddActivity"
+            android:exported="false"
+            android:label="Aggiungi punto vendita"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.shop.ShopListActivity"
+            android:exported="false"
+            android:label="Elenco punti vendita"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="true"
+            android:label="Rilevazione prezzi"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
