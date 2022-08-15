@@ -24,6 +24,7 @@ import com.ds.app.pricereading.service.util.Page;
 import com.ds.app.pricereading.service.util.customasynctask.PrCallback;
 import com.ds.app.pricereading.service.util.customasynctask.PrJobError;
 import com.ds.app.pricereading.db.entity.util.StringUtil;
+import com.ds.app.pricereading.util.ReferenceHolder;
 
 public class ProductListActivity extends AppCompatActivity {
 
@@ -71,6 +72,7 @@ public class ProductListActivity extends AppCompatActivity {
         barcodeButton = findViewById(R.id.product_list_barcode_button);
         clearButton = findViewById(R.id.product_list_clear_button);
         searchButton = findViewById(R.id.product_list_search_button);
+        addButton = findViewById(R.id.product_list_add_button);
         resultViewer = findViewById(R.id.product_list_result_viewer);
 
         productService = ProductService.create(getApplicationContext());
@@ -99,6 +101,28 @@ public class ProductListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 resultViewer.forceRefresh();
+            }
+        });
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String name = nameInput.getText().toString();
+                String barcode = barcodeInput.getText().toString();
+
+                Intent intent = new Intent(
+                        ProductListActivity.this,
+                        ProductAddActivity.class
+                );
+
+                if (pageReferenceHolder.isNull() || pageReferenceHolder.getReference().isEmpty()) {
+                    intent.putExtra(ProductAddActivity.EXTRA_KEY_MAIN_INPUT_NAME, name);
+                    intent.putExtra(ProductAddActivity.EXTRA_KEY_MAIN_INPUT_BARCODE, barcode);
+                }
+
+                startActivityForResult(intent, REQUEST_CODE_PRODUCT_ADD);
+
             }
         });
 
@@ -132,6 +156,8 @@ public class ProductListActivity extends AppCompatActivity {
                                             finish();
                                             return;
                                         }
+
+                                        pageReferenceHolder.setReference(result);
 
                                         runOnUiThread(new Runnable() {
                                             @Override
@@ -311,9 +337,12 @@ public class ProductListActivity extends AppCompatActivity {
     private ImageButton barcodeButton;
     private ImageButton clearButton;
     private ImageButton searchButton;
+    private ImageButton addButton;
     private ResultViewer resultViewer;
 
     private ProductService productService;
+
+    private ReferenceHolder<Page<ProductEntity>> pageReferenceHolder = new ReferenceHolder<>();
 
     private static final int REQUEST_CODE_PRODUCT_ADD = 1;
     private static final int REQUEST_CODE_BARCODE_READ = 2;

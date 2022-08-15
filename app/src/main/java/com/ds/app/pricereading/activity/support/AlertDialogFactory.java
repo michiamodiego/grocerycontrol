@@ -5,8 +5,6 @@ import android.content.DialogInterface;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.ds.app.pricereading.activity.shop.ShopAddActivity;
-
 public class AlertDialogFactory {
 
     public static AlertDialog createYesAlertDialog(Context context, String message, DialogInterface.OnClickListener callback) {
@@ -30,7 +28,7 @@ public class AlertDialogFactory {
         return createYesAlertDialog(context, "Sei sicuro di voler annullare le modifiche?", callback);
     }
 
-    public static AlertDialog createSaveDialog(ShopAddActivity context, DialogInterface.OnClickListener callback) {
+    public static AlertDialog createSaveDialog(Context context, DialogInterface.OnClickListener callback) {
         return createYesAlertDialog(context, "Sei sicuro di voler salvare?", callback);
     }
 }

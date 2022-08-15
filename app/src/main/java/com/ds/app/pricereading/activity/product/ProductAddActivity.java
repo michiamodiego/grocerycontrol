@@ -14,6 +14,7 @@ import com.ds.app.pricereading.activity.BarcodeReaderActivity;
 import com.ds.app.pricereading.activity.FlashReadingActivity;
 import com.ds.app.pricereading.activity.support.AlertDialogFactory;
 import com.ds.app.pricereading.db.entity.ProductEntity;
+import com.ds.app.pricereading.db.entity.util.StringUtil;
 import com.ds.app.pricereading.service.ProductService;
 import com.ds.app.pricereading.service.util.customasynctask.PrCallback;
 import com.ds.app.pricereading.service.util.customasynctask.PrJobError;
@@ -24,6 +25,8 @@ public class ProductAddActivity extends AppCompatActivity {
     public static final int RESULT_CODE_MAIN_KO = 2;
     public static final int RESULT_CODE_MAIN_CANCELLED = 3;
 
+    public static final String EXTRA_KEY_MAIN_INPUT_NAME = "name";
+    public static final String EXTRA_KEY_MAIN_INPUT_BARCODE = "barcode";
     public static final String EXTRA_KEY_MAIN_OUTPUT_MESSAGE = "message";
     public static final String EXTRA_KEY_MAIN_OUTPUT_PRODUCT_ID = "product_id";
 
@@ -40,6 +43,18 @@ public class ProductAddActivity extends AppCompatActivity {
         saveButton = findViewById(R.id.product_add_save_button);
 
         productService = ProductService.create(getApplicationContext());
+
+        Intent intent = getIntent();
+        String name = intent.getStringExtra(EXTRA_KEY_MAIN_INPUT_NAME);
+        String barcode = intent.getStringExtra(EXTRA_KEY_MAIN_INPUT_BARCODE);
+
+        if (!StringUtil.isNullOrEmpty(name)) {
+            nameInput.setText(name);
+        }
+
+        if (!StringUtil.isNullOrEmpty(barcode)) {
+            barcodeInput.setText(barcode);
+        }
 
         barcodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,33 +102,41 @@ public class ProductAddActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String name = nameInput.getText().toString();
-                String barcode = barcodeInput.getText().toString();
-
-                productService
-                        .create(name, barcode)
-                        .execute(new PrCallback<ProductEntity>() {
+                AlertDialogFactory.createSaveDialog(
+                        ProductAddActivity.this,
+                        new DialogInterface.OnClickListener() {
                             @Override
-                            public void call(ProductEntity result, PrJobError prJobError) {
+                            public void onClick(DialogInterface dialogInterface, int i) {
 
-                                if (prJobError != null) {
-                                    Intent intent = new Intent();
-                                    intent.putExtra(EXTRA_KEY_MAIN_OUTPUT_MESSAGE, prJobError.getMessage());
-                                    setResult(RESULT_CODE_MAIN_KO, intent);
-                                    finish();
-                                    return;
-                                }
+                                String name = nameInput.getText().toString();
+                                String barcode = barcodeInput.getText().toString();
 
-                                Intent intent = new Intent();
-                                intent.putExtra(EXTRA_KEY_MAIN_OUTPUT_MESSAGE, "Prodotto creato con successo");
-                                intent.putExtra(EXTRA_KEY_MAIN_OUTPUT_PRODUCT_ID, result.getId());
-                                setResult(RESULT_CODE_MAIN_OK, intent);
-                                finish();
+                                productService
+                                        .create(name, barcode)
+                                        .execute(new PrCallback<ProductEntity>() {
+                                            @Override
+                                            public void call(ProductEntity result, PrJobError prJobError) {
+
+                                                if (prJobError != null) {
+                                                    Intent intent = new Intent();
+                                                    intent.putExtra(EXTRA_KEY_MAIN_OUTPUT_MESSAGE, prJobError.getMessage());
+                                                    setResult(RESULT_CODE_MAIN_KO, intent);
+                                                    finish();
+                                                    return;
+                                                }
+
+                                                Intent intent = new Intent();
+                                                intent.putExtra(EXTRA_KEY_MAIN_OUTPUT_MESSAGE, "Prodotto creato con successo");
+                                                intent.putExtra(EXTRA_KEY_MAIN_OUTPUT_PRODUCT_ID, result.getId());
+                                                setResult(RESULT_CODE_MAIN_OK, intent);
+                                                finish();
+
+                                            }
+                                        });
 
                             }
-                        });
-
+                        }
+                );
             }
         });
 
