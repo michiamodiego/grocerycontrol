@@ -90,6 +90,13 @@
                 android:layout_weight="1"
                 app:srcCompat="@drawable/pr_search" />
 
+            <ImageButton
+                android:id="@+id/shop_list_add_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/pr_add" />
+
         </LinearLayout>
 
     </LinearLayout>

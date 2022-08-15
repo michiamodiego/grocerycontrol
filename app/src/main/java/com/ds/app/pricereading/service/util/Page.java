@@ -4,6 +4,10 @@ import java.util.List;
 
 public class Page<T> {
 
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
     public int getSize() {
         return size;
     }

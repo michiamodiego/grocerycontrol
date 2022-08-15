@@ -13,6 +13,7 @@ import com.ds.app.pricereading.R;
 import com.ds.app.pricereading.activity.BarcodeReaderActivity;
 import com.ds.app.pricereading.activity.support.AlertDialogFactory;
 import com.ds.app.pricereading.db.entity.ShopEntity;
+import com.ds.app.pricereading.db.entity.util.StringUtil;
 import com.ds.app.pricereading.service.ShopService;
 import com.ds.app.pricereading.service.util.customasynctask.PrCallback;
 import com.ds.app.pricereading.service.util.customasynctask.PrJobError;
@@ -23,8 +24,13 @@ public class ShopAddActivity extends AppCompatActivity {
     public static int RESULT_CODE_MAIN_KO = 2;
     public static int RESULT_CODE_MAIN_CANCELLED = 3;
 
-    public static String EXTRA_KEY_MAIN_OUTPUT_MESSAGE = "message";
-    public static String EXTRA_KEY_MAIN_OUTPUT_SHOP_ID = "shop_id";
+    public static final String EXTRA_KEY_MAIN_INPUT_NAME = "name";
+    public static final String EXTRA_KEY_MAIN_INPUT_ADDRESS = "address";
+    public static final String EXTRA_KEY_MAIN_INPUT_LOCATION = "location";
+    public static final String EXTRA_KEY_MAIN_INPUT_POSTAL_CODE = "postal_code";
+    public static final String EXTRA_KEY_MAIN_INPUT_DISTRIBUTION = "distribution";
+    public static final String EXTRA_KEY_MAIN_OUTPUT_MESSAGE = "message";
+    public static final String EXTRA_KEY_MAIN_OUTPUT_SHOP_ID = "shop_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +47,33 @@ public class ShopAddActivity extends AppCompatActivity {
         saveButton = findViewById(R.id.shop_add_save_button);
 
         shopService = ShopService.create(getApplicationContext());
+
+        Intent intent = getIntent();
+        String name = intent.getStringExtra(EXTRA_KEY_MAIN_INPUT_NAME);
+        String address = intent.getStringExtra(EXTRA_KEY_MAIN_INPUT_ADDRESS);
+        String location = intent.getStringExtra(EXTRA_KEY_MAIN_INPUT_LOCATION);
+        String postalCode = intent.getStringExtra(EXTRA_KEY_MAIN_INPUT_POSTAL_CODE);
+        String distribution = intent.getStringExtra(EXTRA_KEY_MAIN_INPUT_DISTRIBUTION);
+
+        if (!StringUtil.isNullOrEmpty(name)) {
+            nameInput.setText(name);
+        }
+
+        if (!StringUtil.isNullOrEmpty(address)) {
+            addressInput.setText(address);
+        }
+
+        if (!StringUtil.isNullOrEmpty(location)) {
+            locationInput.setText(location);
+        }
+
+        if (!StringUtil.isNullOrEmpty(postalCode)) {
+            postalCodeInput.setText(postalCode);
+        }
+
+        if (!StringUtil.isNullOrEmpty(distribution)) {
+            distributionInput.setText(distribution);
+        }
 
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,43 +116,51 @@ public class ShopAddActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String name = nameInput.getText().toString();
-                String address = addressInput.getText().toString();
-                String location = locationInput.getText().toString();
-                String postalCode = postalCodeInput.getText().toString();
-                String distribution = distributionInput.getText().toString();
-
-                shopService
-                        .create(
-                                name,
-                                address,
-                                location,
-                                postalCode,
-                                distribution
-                        )
-                        .execute(new PrCallback<ShopEntity>() {
+                AlertDialogFactory.createSaveDialog(
+                        ShopAddActivity.this,
+                        new DialogInterface.OnClickListener() {
                             @Override
-                            public void call(ShopEntity result, PrJobError prJobError) {
+                            public void onClick(DialogInterface dialogInterface, int i) {
 
-                                if (prJobError != null) {
-                                    Intent intent = new Intent();
-                                    intent.putExtra(EXTRA_KEY_MAIN_OUTPUT_MESSAGE, prJobError.getMessage());
-                                    setResult(RESULT_CODE_MAIN_OK, intent);
-                                    finish();
-                                    return;
-                                }
+                                String name = nameInput.getText().toString();
+                                String address = addressInput.getText().toString();
+                                String location = locationInput.getText().toString();
+                                String postalCode = postalCodeInput.getText().toString();
+                                String distribution = distributionInput.getText().toString();
 
-                                Intent intent = new Intent();
-                                intent.putExtra(EXTRA_KEY_MAIN_OUTPUT_MESSAGE, "Punto vendita creato con successo");
-                                intent.putExtra(EXTRA_KEY_MAIN_OUTPUT_SHOP_ID, result.getId());
-                                setResult(RESULT_CODE_MAIN_OK, intent);
-                                finish();
-                                return;
+                                shopService
+                                        .create(
+                                                name,
+                                                address,
+                                                location,
+                                                postalCode,
+                                                distribution
+                                        )
+                                        .execute(new PrCallback<ShopEntity>() {
+                                            @Override
+                                            public void call(ShopEntity result, PrJobError prJobError) {
+
+                                                if (prJobError != null) {
+                                                    Intent intent = new Intent();
+                                                    intent.putExtra(EXTRA_KEY_MAIN_OUTPUT_MESSAGE, prJobError.getMessage());
+                                                    setResult(RESULT_CODE_MAIN_OK, intent);
+                                                    finish();
+                                                    return;
+                                                }
+
+                                                Intent intent = new Intent();
+                                                intent.putExtra(EXTRA_KEY_MAIN_OUTPUT_MESSAGE, "Punto vendita creato con successo");
+                                                intent.putExtra(EXTRA_KEY_MAIN_OUTPUT_SHOP_ID, result.getId());
+                                                setResult(RESULT_CODE_MAIN_OK, intent);
+                                                finish();
+                                                return;
+
+                                            }
+                                        });
 
                             }
-                        });
-
+                        }
+                );
             }
         });
 

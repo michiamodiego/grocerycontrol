@@ -22,6 +22,7 @@ import com.ds.app.pricereading.service.util.customasynctask.PrCallback;
 import com.ds.app.pricereading.service.util.customasynctask.PrJobError;
 import com.ds.app.pricereading.db.entity.util.ShopUtil;
 import com.ds.app.pricereading.db.entity.util.StringUtil;
+import com.ds.app.pricereading.util.ReferenceHolder;
 import com.ds.app.pricereading.util.preferredshop.SharedPrefsUtil;
 
 public class ShopListActivity extends AppCompatActivity {
@@ -77,6 +78,7 @@ public class ShopListActivity extends AppCompatActivity {
         distributionInput = findViewById(R.id.shop_list_distribution_input);
         clearButton = findViewById(R.id.shop_list_clear_button);
         searchButton = findViewById(R.id.shop_list_search_button);
+        addButton = findViewById(R.id.shop_list_add_button);
         resultViewer = findViewById(R.id.shop_list_result_viewer);
 
         shopService = ShopService.create(getApplicationContext());
@@ -99,6 +101,34 @@ public class ShopListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 resultViewer.forceRefresh();
+            }
+        });
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String name = nameInput.getText().toString();
+                String address = addressInput.getText().toString();
+                String location = locationInput.getText().toString();
+                String postalCode = postalCodeInput.getText().toString();
+                String distribution = distributionInput.getText().toString();
+
+                Intent intent = new Intent(
+                        ShopListActivity.this,
+                        ShopAddActivity.class
+                );
+
+                if (pageReferenceHolder.isNull() || pageReferenceHolder.getReference().isEmpty()) {
+                    intent.putExtra(ShopAddActivity.EXTRA_KEY_MAIN_INPUT_NAME, name);
+                    intent.putExtra(ShopAddActivity.EXTRA_KEY_MAIN_INPUT_ADDRESS, address);
+                    intent.putExtra(ShopAddActivity.EXTRA_KEY_MAIN_INPUT_LOCATION, location);
+                    intent.putExtra(ShopAddActivity.EXTRA_KEY_MAIN_INPUT_POSTAL_CODE, postalCode);
+                    intent.putExtra(ShopAddActivity.EXTRA_KEY_MAIN_INPUT_DISTRIBUTION, distribution);
+                }
+
+                startActivityForResult(intent, REQUEST_CODE_SHOP_ADD);
+
             }
         });
 
@@ -138,6 +168,8 @@ public class ShopListActivity extends AppCompatActivity {
                                             finish();
                                             return;
                                         }
+
+                                        pageReferenceHolder.setReference(result);
 
                                         runOnUiThread(new Runnable() {
                                             @Override
@@ -338,11 +370,14 @@ public class ShopListActivity extends AppCompatActivity {
     private EditText distributionInput;
     private ImageButton clearButton;
     private ImageButton searchButton;
+    private ImageButton addButton;
     private ResultViewer resultViewer;
 
     private ShopService shopService;
 
     private boolean pickMode;
+
+    private ReferenceHolder<Page<ShopEntity>> pageReferenceHolder = new ReferenceHolder();
 
     private static final int REQUEST_CODE_SHOP_ADD = 1;
     private static final int REQUEST_CODE_SHOP_EDIT = 2;
