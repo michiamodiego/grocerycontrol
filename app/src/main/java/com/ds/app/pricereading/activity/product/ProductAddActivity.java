@@ -11,13 +11,12 @@ import android.widget.ImageButton;
 
 import com.ds.app.pricereading.R;
 import com.ds.app.pricereading.activity.BarcodeReaderActivity;
-import com.ds.app.pricereading.activity.FlashReadingActivity;
 import com.ds.app.pricereading.activity.support.AlertDialogFactory;
 import com.ds.app.pricereading.db.entity.ProductEntity;
 import com.ds.app.pricereading.db.entity.util.StringUtil;
 import com.ds.app.pricereading.service.ProductService;
-import com.ds.app.pricereading.service.util.customasynctask.PrCallback;
-import com.ds.app.pricereading.service.util.customasynctask.PrJobError;
+import com.ds.app.pricereading.util.customasynctask.PrCallback;
+import com.ds.app.pricereading.util.customasynctask.PrJobError;
 
 public class ProductAddActivity extends AppCompatActivity {
 

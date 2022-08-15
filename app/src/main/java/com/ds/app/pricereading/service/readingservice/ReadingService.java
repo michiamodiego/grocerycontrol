@@ -17,10 +17,10 @@ import com.ds.app.pricereading.service.ShopService;
 import com.ds.app.pricereading.service.readingservice.dto.CreateDto;
 import com.ds.app.pricereading.service.readingservice.dto.CreateWithProductDto;
 import com.ds.app.pricereading.service.util.Page;
-import com.ds.app.pricereading.service.util.customasynctask.PrAsyncTask;
-import com.ds.app.pricereading.service.util.customasynctask.PrJob;
-import com.ds.app.pricereading.service.util.customasynctask.PrJobError;
-import com.ds.app.pricereading.service.util.customasynctask.PrResult;
+import com.ds.app.pricereading.util.customasynctask.PrAsyncTask;
+import com.ds.app.pricereading.util.customasynctask.PrJob;
+import com.ds.app.pricereading.util.customasynctask.PrJobError;
+import com.ds.app.pricereading.util.customasynctask.PrResult;
 import com.ds.app.pricereading.util.ReferenceHolder;
 
 import java.math.BigDecimal;

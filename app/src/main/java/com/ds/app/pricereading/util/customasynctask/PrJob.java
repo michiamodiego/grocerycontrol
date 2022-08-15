@@ -1,4 +1,4 @@
-package com.ds.app.pricereading.service.util.customasynctask;
+package com.ds.app.pricereading.util.customasynctask;
 
 public interface PrJob<T> {
 

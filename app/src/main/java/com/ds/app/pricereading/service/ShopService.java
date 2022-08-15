@@ -8,10 +8,10 @@ import com.ds.app.pricereading.db.AppDatabaseAccessor;
 import com.ds.app.pricereading.db.entity.ShopEntity;
 import com.ds.app.pricereading.db.util.DbUtil;
 import com.ds.app.pricereading.service.util.Page;
-import com.ds.app.pricereading.service.util.customasynctask.PrAsyncTask;
-import com.ds.app.pricereading.service.util.customasynctask.PrJob;
-import com.ds.app.pricereading.service.util.customasynctask.PrJobError;
-import com.ds.app.pricereading.service.util.customasynctask.PrResult;
+import com.ds.app.pricereading.util.customasynctask.PrAsyncTask;
+import com.ds.app.pricereading.util.customasynctask.PrJob;
+import com.ds.app.pricereading.util.customasynctask.PrJobError;
+import com.ds.app.pricereading.util.customasynctask.PrResult;
 import com.ds.app.pricereading.db.entity.util.StringUtil;
 
 import java.util.Date;

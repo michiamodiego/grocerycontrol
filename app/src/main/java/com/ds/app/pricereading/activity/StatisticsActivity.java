@@ -33,8 +33,8 @@ import com.ds.app.pricereading.service.ProductService;
 import com.ds.app.pricereading.service.ShopService;
 import com.ds.app.pricereading.service.readingservice.ReadingService;
 import com.ds.app.pricereading.service.util.Page;
-import com.ds.app.pricereading.service.util.customasynctask.PrCallback;
-import com.ds.app.pricereading.service.util.customasynctask.PrJobError;
+import com.ds.app.pricereading.util.customasynctask.PrCallback;
+import com.ds.app.pricereading.util.customasynctask.PrJobError;
 import com.ds.app.pricereading.util.ReferenceHolder;
 import com.ds.app.pricereading.db.entity.util.StringUtil;
 

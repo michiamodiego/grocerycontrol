@@ -14,8 +14,8 @@ import com.ds.app.pricereading.activity.support.ResultViewer;
 import com.ds.app.pricereading.db.entity.ReadingEntity;
 import com.ds.app.pricereading.service.readingservice.ReadingService;
 import com.ds.app.pricereading.service.util.Page;
-import com.ds.app.pricereading.service.util.customasynctask.PrCallback;
-import com.ds.app.pricereading.service.util.customasynctask.PrJobError;
+import com.ds.app.pricereading.util.customasynctask.PrCallback;
+import com.ds.app.pricereading.util.customasynctask.PrJobError;
 import com.ds.app.pricereading.db.entity.util.DateUtil;
 import com.ds.app.pricereading.db.entity.util.StringUtil;
 

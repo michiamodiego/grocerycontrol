@@ -1,6 +1,4 @@
-package com.ds.app.pricereading.service.util.customasynctask;
-
-import android.os.AsyncTask;
+package com.ds.app.pricereading.util.customasynctask;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
