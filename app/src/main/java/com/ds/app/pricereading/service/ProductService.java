@@ -8,6 +8,7 @@ import com.ds.app.pricereading.db.AppDatabaseAccessor;
 import com.ds.app.pricereading.db.entity.ProductEntity;
 import com.ds.app.pricereading.db.util.DbUtil;
 import com.ds.app.pricereading.service.util.Page;
+import com.ds.app.pricereading.service.util.ValidationResult;
 import com.ds.app.pricereading.util.customasynctask.PrAsyncTask;
 import com.ds.app.pricereading.util.customasynctask.PrJob;
 import com.ds.app.pricereading.util.customasynctask.PrJobError;
@@ -21,6 +22,22 @@ public class ProductService {
     public static final ProductService create(Context context) {
         AppDatabase database = AppDatabaseAccessor.getInstance(context);
         return new ProductService(database, database.getProductDao());
+    }
+
+    public ValidationResult isValid(String name, String barcode) {
+
+        ValidationResult validationResult = new ValidationResult();
+
+        if (StringUtil.isNullOrEmpty(name)) {
+            validationResult.add("Il nome del prodotto non deve essere vuoto");
+        }
+
+        if (StringUtil.isNullOrEmpty(barcode)) {
+            validationResult.add("Il barcode non deve essere vuoto");
+        }
+
+        return validationResult;
+
     }
 
     public PrAsyncTask<ProductEntity> getProductById(long productId) {
@@ -78,6 +95,10 @@ public class ProductService {
         return PrAsyncTask.getInstance(new PrJob<ProductEntity>() {
             @Override
             public void run(PrResult<ProductEntity> prResult) {
+                if (isValid(name, barcode).anyError()) {
+                    prResult.resolve(new PrJobError("I dati inseriti non sono corretti"));
+                    return;
+                }
                 try {
                     ProductEntity productEntity = new ProductEntity();
                     productEntity.setName(name);

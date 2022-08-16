@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.ds.app.pricereading.R;
 import com.ds.app.pricereading.activity.BarcodeReaderActivity;
@@ -15,6 +16,7 @@ import com.ds.app.pricereading.activity.support.AlertDialogFactory;
 import com.ds.app.pricereading.db.entity.ProductEntity;
 import com.ds.app.pricereading.db.entity.util.StringUtil;
 import com.ds.app.pricereading.service.ProductService;
+import com.ds.app.pricereading.service.util.ValidationResult;
 import com.ds.app.pricereading.util.customasynctask.PrCallback;
 import com.ds.app.pricereading.util.customasynctask.PrJobError;
 
@@ -109,6 +111,19 @@ public class ProductAddActivity extends AppCompatActivity {
 
                                 String name = nameInput.getText().toString();
                                 String barcode = barcodeInput.getText().toString();
+
+                                ValidationResult validationResult = productService.isValid(name, barcode);
+
+                                if (validationResult.anyError()) {
+                                    Toast
+                                            .makeText(
+                                                    ProductAddActivity.this,
+                                                    validationResult.getCompleteMessage(),
+                                                    Toast.LENGTH_LONG
+                                            )
+                                            .show();
+                                    return;
+                                }
 
                                 productService
                                         .create(name, barcode)
