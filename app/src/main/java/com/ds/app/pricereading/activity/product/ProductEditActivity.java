@@ -15,6 +15,7 @@ import com.ds.app.pricereading.activity.BarcodeReaderActivity;
 import com.ds.app.pricereading.activity.support.AlertDialogFactory;
 import com.ds.app.pricereading.db.entity.ProductEntity;
 import com.ds.app.pricereading.service.ProductService;
+import com.ds.app.pricereading.service.util.ValidationResult;
 import com.ds.app.pricereading.util.customasynctask.PrCallback;
 import com.ds.app.pricereading.util.customasynctask.PrJobError;
 import com.ds.app.pricereading.util.ReferenceHolder;
@@ -101,33 +102,54 @@ public class ProductEditActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String name = nameInput.getText().toString().toUpperCase();
-                String barcode = barcodeInput.getText().toString().toUpperCase();
-
-                ProductEntity productEntity = productEntityReferenceHolder.getReference().clone();
-
-                productEntity.setName(name);
-                productEntity.setBarcode(barcode);
-
-                productService
-                        .update(productEntity)
-                        .execute(new PrCallback<Void>() {
+                AlertDialogFactory.createSaveDialog(
+                        ProductEditActivity.this,
+                        new DialogInterface.OnClickListener() {
                             @Override
-                            public void call(Void result, PrJobError prJobError) {
+                            public void onClick(DialogInterface dialogInterface, int i) {
 
-                                if (prJobError != null) {
-                                    Intent intent = new Intent();
-                                    intent.putExtra(EXTRA_KEY_MAIN_OUTPUT_MESSAGE, prJobError.getMessage());
-                                    setResult(RESULT_CODE_MAIN_OK);
-                                    finish();
+                                String name = nameInput.getText().toString().toUpperCase();
+                                String barcode = barcodeInput.getText().toString().toUpperCase();
+
+                                ValidationResult validationResult = productService.isValid(name, barcode);
+
+                                if (validationResult.anyError()) {
+                                    Toast
+                                            .makeText(
+                                                    ProductEditActivity.this,
+                                                    validationResult.getCompleteMessage(),
+                                                    Toast.LENGTH_LONG
+                                            )
+                                            .show();
                                     return;
                                 }
 
-                                Intent intent = new Intent();
-                                intent.putExtra(EXTRA_KEY_MAIN_OUTPUT_MESSAGE, "Prodotto aggiornato con successo");
-                                setResult(RESULT_CODE_MAIN_OK, intent);
-                                finish();
+                                ProductEntity productEntity = productEntityReferenceHolder.getReference().clone();
+
+                                productEntity.setName(name);
+                                productEntity.setBarcode(barcode);
+
+                                productService
+                                        .update(productEntity)
+                                        .execute(new PrCallback<Void>() {
+                                            @Override
+                                            public void call(Void result, PrJobError prJobError) {
+
+                                                if (prJobError != null) {
+                                                    Intent intent = new Intent();
+                                                    intent.putExtra(EXTRA_KEY_MAIN_OUTPUT_MESSAGE, prJobError.getMessage());
+                                                    setResult(RESULT_CODE_MAIN_OK);
+                                                    finish();
+                                                    return;
+                                                }
+
+                                                Intent intent = new Intent();
+                                                intent.putExtra(EXTRA_KEY_MAIN_OUTPUT_MESSAGE, "Prodotto aggiornato con successo");
+                                                setResult(RESULT_CODE_MAIN_OK, intent);
+                                                finish();
+
+                                            }
+                                        });
 
                             }
                         });
