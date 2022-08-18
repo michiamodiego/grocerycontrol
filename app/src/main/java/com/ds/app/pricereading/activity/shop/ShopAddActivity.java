@@ -8,12 +8,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.ds.app.pricereading.R;
+import com.ds.app.pricereading.activity.product.ProductAddActivity;
 import com.ds.app.pricereading.activity.support.AlertDialogFactory;
 import com.ds.app.pricereading.db.entity.ShopEntity;
 import com.ds.app.pricereading.db.entity.util.StringUtil;
 import com.ds.app.pricereading.service.ShopService;
+import com.ds.app.pricereading.service.util.ValidationResult;
 import com.ds.app.pricereading.util.customasynctask.PrCallback;
 import com.ds.app.pricereading.util.customasynctask.PrJobError;
 
@@ -126,6 +129,25 @@ public class ShopAddActivity extends AppCompatActivity {
                                 String location = locationInput.getText().toString();
                                 String postalCode = postalCodeInput.getText().toString();
                                 String distribution = distributionInput.getText().toString();
+
+                                ValidationResult validationResult = shopService.isValid(
+                                        name,
+                                        address,
+                                        location,
+                                        postalCode,
+                                        distribution
+                                );
+
+                                if (validationResult.anyError()) {
+                                    Toast
+                                            .makeText(
+                                                    ShopAddActivity.this,
+                                                    validationResult.getCompleteMessage(),
+                                                    Toast.LENGTH_LONG
+                                            )
+                                            .show();
+                                    return;
+                                }
 
                                 shopService
                                         .create(

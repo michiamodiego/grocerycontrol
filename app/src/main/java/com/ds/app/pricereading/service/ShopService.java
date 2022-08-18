@@ -8,6 +8,7 @@ import com.ds.app.pricereading.db.AppDatabaseAccessor;
 import com.ds.app.pricereading.db.entity.ShopEntity;
 import com.ds.app.pricereading.db.util.DbUtil;
 import com.ds.app.pricereading.service.util.Page;
+import com.ds.app.pricereading.service.util.ValidationResult;
 import com.ds.app.pricereading.util.customasynctask.PrAsyncTask;
 import com.ds.app.pricereading.util.customasynctask.PrJob;
 import com.ds.app.pricereading.util.customasynctask.PrJobError;
@@ -21,6 +22,24 @@ public class ShopService {
     public static final ShopService create(Context context) {
         AppDatabase database = AppDatabaseAccessor.getInstance(context);
         return new ShopService(database, database.getShopDao());
+    }
+
+    public ValidationResult isValid(
+            String name,
+            String address,
+            String location,
+            String postalCode,
+            String distribution
+    ) {
+
+        ValidationResult validationResult = new ValidationResult();
+
+        if (StringUtil.isNullOrEmpty(name)) {
+            validationResult.add("Il nome del punto vendita non deve essere vuoto");
+        }
+
+        return validationResult;
+
     }
 
     public PrAsyncTask<ShopEntity> getShopById(Long id) {
