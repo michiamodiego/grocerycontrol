@@ -8,11 +8,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.ds.app.pricereading.R;
 import com.ds.app.pricereading.activity.support.AlertDialogFactory;
 import com.ds.app.pricereading.db.entity.ShopEntity;
 import com.ds.app.pricereading.service.ShopService;
+import com.ds.app.pricereading.service.util.ValidationResult;
 import com.ds.app.pricereading.util.customasynctask.PrCallback;
 import com.ds.app.pricereading.util.customasynctask.PrJobError;
 import com.ds.app.pricereading.util.ReferenceHolder;
@@ -99,49 +101,76 @@ public class ShopEditActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String name = nameInput.getText().toString();
-                String address = addressInput.getText().toString();
-                String location = locationInput.getText().toString();
-                String postalCode = postalCodeInput.getText().toString();
-                String distribution = distributionInput.getText().toString();
-
-                ShopEntity shopEntity = shopEntityReferenceHolder
-                        .getReference()
-                        .clone();
-
-                shopEntity.setName(name);
-                shopEntity.setAddress(address);
-                shopEntity.setLocation(location);
-                shopEntity.setPostalCode(postalCode);
-                shopEntity.setDistribution(distribution);
-                shopEntity.setUpdatedAt(new Date().getTime());
-
-                shopService
-                        .update(shopEntity)
-                        .execute(new PrCallback<Void>() {
+                AlertDialogFactory.createSaveDialog(
+                        ShopEditActivity.this,
+                        new DialogInterface.OnClickListener() {
                             @Override
-                            public void call(Void data, PrJobError prJobError) {
+                            public void onClick(DialogInterface dialogInterface, int i) {
 
-                                if (prJobError != null) {
-                                    Intent intent = new Intent();
-                                    intent.putExtra(EXTRA_KEY_MAIN_OUTPUT_MESSAGE, prJobError.getMessage());
-                                    setResult(RESULT_CODE_MAIN_KO, intent);
-                                    finish();
+                                String name = nameInput.getText().toString();
+                                String address = addressInput.getText().toString();
+                                String location = locationInput.getText().toString();
+                                String postalCode = postalCodeInput.getText().toString();
+                                String distribution = distributionInput.getText().toString();
+
+                                ValidationResult validationResult = shopService.isValid(
+                                        name,
+                                        address,
+                                        location,
+                                        postalCode,
+                                        distribution
+                                );
+
+                                if (validationResult.anyError()) {
+                                    Toast
+                                            .makeText(
+                                                    ShopEditActivity.this,
+                                                    validationResult.getCompleteMessage(),
+                                                    Toast.LENGTH_LONG
+                                            )
+                                            .show();
                                     return;
                                 }
 
-                                PreferredShop preferredShop = SharedPrefsUtil.getPreferredShop(getApplicationContext());
+                                ShopEntity shopEntity = shopEntityReferenceHolder
+                                        .getReference()
+                                        .clone();
 
-                                if (shopId == preferredShop.getId()) {
-                                    SharedPrefsUtil.setPreferredShop(getApplicationContext(), shopId, ShopUtil.getStringifiedShop(shopEntity));
-                                }
+                                shopEntity.setName(name);
+                                shopEntity.setAddress(address);
+                                shopEntity.setLocation(location);
+                                shopEntity.setPostalCode(postalCode);
+                                shopEntity.setDistribution(distribution);
+                                shopEntity.setUpdatedAt(new Date().getTime());
 
-                                Intent intent = new Intent();
-                                intent.putExtra(EXTRA_KEY_MAIN_OUTPUT_MESSAGE, "Punto vendita aggiornato con successo");
-                                setResult(RESULT_CODE_MAIN_OK, intent);
-                                finish();
-                                return;
+                                shopService
+                                        .update(shopEntity)
+                                        .execute(new PrCallback<Void>() {
+                                            @Override
+                                            public void call(Void data, PrJobError prJobError) {
+
+                                                if (prJobError != null) {
+                                                    Intent intent = new Intent();
+                                                    intent.putExtra(EXTRA_KEY_MAIN_OUTPUT_MESSAGE, prJobError.getMessage());
+                                                    setResult(RESULT_CODE_MAIN_KO, intent);
+                                                    finish();
+                                                    return;
+                                                }
+
+                                                PreferredShop preferredShop = SharedPrefsUtil.getPreferredShop(getApplicationContext());
+
+                                                if (shopId == preferredShop.getId()) {
+                                                    SharedPrefsUtil.setPreferredShop(getApplicationContext(), shopId, ShopUtil.getStringifiedShop(shopEntity));
+                                                }
+
+                                                Intent intent = new Intent();
+                                                intent.putExtra(EXTRA_KEY_MAIN_OUTPUT_MESSAGE, "Punto vendita aggiornato con successo");
+                                                setResult(RESULT_CODE_MAIN_OK, intent);
+                                                finish();
+                                                return;
+
+                                            }
+                                        });
 
                             }
                         });
