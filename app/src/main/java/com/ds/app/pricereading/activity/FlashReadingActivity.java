@@ -392,7 +392,7 @@ public class FlashReadingActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        setProductDetail(result);
+                                        setProductDetail(result, barcode);
                                     }
                                 });
 
@@ -424,55 +424,52 @@ public class FlashReadingActivity extends AppCompatActivity {
     }
 
     private void setProductDetail(ProductEntity productEntity) {
+        setProductDetail(productEntity, "");
+    }
+
+    private void setProductDetail(ProductEntity productEntity, String barcode) {
+
+        if (productEntity == null) {
+
+            productEntityReferenceHolder.setReference(null);
+
+            productNameInput.setText("");
+            productBarcodeInput.setText(barcode);
+
+            return;
+
+        }
 
         productEntityReferenceHolder.setReference(productEntity);
 
-        String name = productEntity.getName();
-        String barcode = productEntity.getBarcode();
-
-        if (!StringUtil.isNullOrEmpty(name)) {
-            productNameInput.setText(name);
-        }
-
-        if (!StringUtil.isNullOrEmpty(barcode)) {
-            productBarcodeInput.setText(barcode);
-        }
+        productNameInput.setText(productEntity.getName());
+        productBarcodeInput.setText(productEntity.getBarcode());
 
     }
 
     private void setShopDetail(ShopEntity shopEntity) {
 
         if (shopEntity == null) {
+
+            shopEntityReferenceHolder.setReference(null);
+
+            shopNameInput.setText("");
+            shopAddressInput.setText("");
+            shopLocationInput.setText("");
+            shopPostalCodeInput.setText("");
+            shopDistributionInput.setText("");
+
             return;
+
         }
 
         shopEntityReferenceHolder.setReference(shopEntity);
 
-        String name = shopEntity.getName();
-        String address = shopEntity.getAddress();
-        String location = shopEntity.getLocation();
-        String postalCode = shopEntity.getPostalCode();
-        String distribution = shopEntity.getDistribution();
-
-        if (!StringUtil.isNullOrEmpty(name)) {
-            shopNameInput.setText(name);
-        }
-
-        if (!StringUtil.isNullOrEmpty(address)) {
-            shopAddressInput.setText(address);
-        }
-
-        if (!StringUtil.isNullOrEmpty(location)) {
-            shopLocationInput.setText(location);
-        }
-
-        if (!StringUtil.isNullOrEmpty(postalCode)) {
-            shopPostalCodeInput.setText(postalCode);
-        }
-
-        if (!StringUtil.isNullOrEmpty(distribution)) {
-            shopDistributionInput.setText(distribution);
-        }
+        shopNameInput.setText(shopEntity.getName());
+        shopAddressInput.setText(shopEntity.getAddress());
+        shopLocationInput.setText(shopEntity.getLocation());
+        shopPostalCodeInput.setText(shopEntity.getPostalCode());
+        shopDistributionInput.setText(shopEntity.getDistribution());
 
     }
 
